@@ -1,0 +1,11 @@
+[flake8]
+max-line-length = 120
+max-doc-length = 140  
+exclude = .venv, .vscode, __pycache__ , __init__.py , test_tripes.py, migrations/**                                                                                                     
+count = true
+statistics = true
+show-source = true
+require-plugins = flake8-docstrings
+tee = true
+doctests = true
+ignore = E251 , D200 , D400 , W293 , D106 , D107 , D401 , D210

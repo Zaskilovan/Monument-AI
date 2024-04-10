@@ -1,0 +1,9 @@
+# GLOBAL
+.env
+**/__pycache__/
+
+# PROJECT
+poetry.lock
+api/media
+helper.py 
+media

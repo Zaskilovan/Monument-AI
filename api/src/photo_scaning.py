@@ -27,7 +27,7 @@ objects = {
 class ScanPhoto:
 
     def __init__(self):
-        self.model = YOLO("weights/yolov8n.pt")
+        self.model = YOLO("weights/best.pt")
         self.box_annotator = sv.BoxAnnotator(
             thickness=2,
             text_thickness=2,
@@ -53,6 +53,7 @@ class ScanPhoto:
             for _, _, confidence, class_id, *_
             in detections
         ]
+
 
         frame = self.box_annotator.annotate(
                         scene=frame, 

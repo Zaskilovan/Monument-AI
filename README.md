@@ -20,11 +20,7 @@ sudo docker compose --env-file .env up -d
 
 cd api
 
-aerich -c ../pyproject.toml init -t config.database_config --location ../migrations
-
-aerich -c ../pyproject.toml init-db
-
-python3 -B run.py
+uvicorn run:app --reload
 
 ```
 

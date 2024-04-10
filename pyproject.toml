@@ -21,6 +21,7 @@ pydantic-settings = "^2.2.1"
 mysql = "^0.0.3"
 aiomysql = "^0.2.0"
 cryptography = "^42.0.5"
+openai = "^1.16.2"
 
 
 

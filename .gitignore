@@ -7,3 +7,6 @@ poetry.lock
 api/media
 helper.py 
 media
+poetry.lock
+api/media
+api/audio

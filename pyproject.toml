@@ -24,6 +24,11 @@ uuid = "^1.30"
 pygoogle-image = "^1.0.0"
 simple-image-download = "^0.5"
 bing-image-downloader = "^1.1.2"
+mysql = "^0.0.3"
+aiomysql = "^0.2.0"
+cryptography = "^42.0.5"
+openai = "^1.16.2"
+load-dotenv = "^0.1.0"
 
 
 

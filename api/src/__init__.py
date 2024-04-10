@@ -1,1 +1,2 @@
-from .photo_scaning import Scaner
+from .photo_scaning import ScanPhoto
+from .getText import getText

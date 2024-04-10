@@ -1,8 +1,10 @@
-from fastapi import FastAPI, UploadFile , Query
+from fastapi import FastAPI, UploadFile , Query, HTTPException , Body
+from fastapi.responses import FileResponse
 from typing import Optional
-from src import Scaner
+from src import ScanPhoto , getText # type: ignore
 
 app = FastAPI()
+scaner = ScanPhoto()
 
 @app.get("/")
 def read_root():
@@ -15,10 +17,22 @@ async def scan_photo(
     latitude: Optional[float] = Query(None, title="Latitude", description="Latitude of the photo", ge=-90, le=90),
     ):
 
-    print(1)                 
-    return await Scaner.scan_photo(photo, longitude, latitude)
+              
+    get_object =  await scaner.scan_photo(photo, longitude, latitude)
 
-
+    if get_object['objects'] == []:
+        raise HTTPException(status_code=404, detail="Object not found")
+    
+    get_text_and_audio = await getText(get_object['objects'][0])
+    return get_object | get_text_and_audio # type: ignore
+    
+@app.post("/get_media", status_code=200)
+async def get_media(path: str = Body(...)):
+    if path.split('/')[0] == 'media':
+        return FileResponse(path, media_type="image/jpeg")
+    if path.split('/')[0] == 'audio':
+        return FileResponse(path, media_type="audio/mpeg")
+    
 
 
 

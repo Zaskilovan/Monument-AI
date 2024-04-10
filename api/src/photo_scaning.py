@@ -1,3 +1,4 @@
+import os
 from fastapi import UploadFile
 from typing import Optional
 from base64 import b64encode
@@ -49,7 +50,7 @@ class ScanPhoto:
 
         detections = sv.Detections.from_ultralytics(result)
         labels = [
-            f"{self.model.model.names[class_id]} {confidence:0.2f}"
+            f"{self.model.model.names[class_id]} {confidence:0.2f}"  # type: ignore
             for _, _, confidence, class_id, *_
             in detections
         ]
@@ -61,13 +62,16 @@ class ScanPhoto:
                         labels=labels
                     )
         
+        os.makedirs('media', exist_ok=True)
         path = f"media/{uuid4()}.jpg"
         cv2.imwrite(path, frame)
 
-        return FileResponse(path, media_type="image/jpeg")
+        return {"photo_path": path, "objects": labels}
+
+        # return FileResponse(path, media_type="image/jpeg")
     
 
-Scaner = ScanPhoto()
+
 
 
 

@@ -1,15 +1,11 @@
 import os
 from fastapi import UploadFile
 from typing import Optional
-from base64 import b64encode
-
-from fastapi.responses import FileResponse
 
 import cv2
 from ultralytics import YOLO
 import supervision as sv
 import numpy as np
-import pprint
 
 from uuid import uuid4
 
@@ -28,7 +24,7 @@ objects = {
 class ScanPhoto:
 
     def __init__(self):
-        self.model = YOLO("weights/best.pt")
+        self.model = YOLO("weights/best (17).pt")
         self.box_annotator = sv.BoxAnnotator(
             thickness=2,
             text_thickness=2,
@@ -49,11 +45,17 @@ class ScanPhoto:
 
 
         detections = sv.Detections.from_ultralytics(result)
-        labels = [
-            f"{self.model.model.names[class_id]} {confidence:0.2f}"  # type: ignore
-            for _, _, confidence, class_id, *_
-            in detections
-        ]
+        # labels = [
+        #     f"{self.model.model.names[class_id]} {confidence:0.2f}"  # type: ignore
+        #     for _, _, confidence, class_id, *_
+        #     in detections
+        # ]
+
+        labels = []
+        for _, _, confidence, class_id, *_ in detections:
+            if confidence > 0.6: # type: ignore
+                if class_id in [1,2]: # Оперные театр и Потемкинская лестница
+                    labels.append(f"{self.model.model.names[class_id]} {confidence:0.2f}")  # type: ignore
 
 
         frame = self.box_annotator.annotate(

@@ -1,14 +1,15 @@
-from pathlib import Path
 from typing import Dict, Union 
 from openai import OpenAI
 
 import os 
 from  uuid import uuid4
+from dotenv import load_dotenv
 
+load_dotenv()
 
-fastapi_key = os.getenv("FASTAPI_KEY")
+openai_key = os.getenv("OPENAI_API_KEY")
 
-client = OpenAI(api_key = fastapi_key)
+client = OpenAI(api_key=openai_key)
 
 async def getText(rawText: str) -> Union[Dict[str, str], None] :
     rawText = rawText.replace('-', ' ')

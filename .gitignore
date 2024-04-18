@@ -1,5 +1,5 @@
 # GLOBAL
-# .env
+.env
 **/__pycache__/
 
 # PROJECT
